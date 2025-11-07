@@ -1,0 +1,1027 @@
+@charset "utf-8";
+
+/* ==========================================================================
+   ESTILOS BASE Y GLOBALES
+   ========================================================================== */
+
+/* Estilos para el elemento raíz HTML */
+html {
+    overflow-y: scroll;
+}
+
+/* Estilos para el cuerpo de la página (Body) */
+body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 100%;
+    background-color: #fdf4ff;
+
+    /* Configuración Flexbox para mantener el footer al final */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Estilos generales de tipografía */
+h1 { font-size: 300%; }
+h2 { font-size: 200%; }
+h3 { font-size: 180%; }
+p  { font-size: 100%; }
+
+/* Reseteo de box-sizing para todos los elementos */
+* {
+    box-sizing: border-box;
+}
+
+/* Estilos para enlaces (Links) */
+a {
+    text-decoration: none;
+    color: #000;
+    transition: 0.5s;
+}
+
+a:hover {
+    color: #ff0000;
+    transition: 0.5s;
+}
+
+/* Clases de utilidad */
+.mano {
+    cursor: pointer;
+}
+
+.negrita {
+    font-weight: bold;
+}
+
+/* Fondo fijo que cubre toda la pantalla */
+.fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/panel2.jpg');
+    background-repeat: repeat;
+    background-size: auto;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Banner de estado/título en la parte superior */
+.online {
+    width: 100%;
+    background-color: #d273d2;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 400%;
+    font-family: "Rubik Glitch", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-optical-sizing: auto;
+    height: 10vh;
+    position: sticky;
+    top: 7%;
+    z-index: 5;
+}
+
+/* ==========================================================================
+   HEADER Y NAVEGACIÓN (MENU1)
+   ========================================================================== */
+
+/* Estilos principales del menú de navegación superior */
+.menu1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 8vh; /* altura inicial */
+    width: 100%;
+    padding: 0 2em;
+    background-color: #d273d2;
+    font-family: "Parkinsans", sans-serif;
+    color: #fff;
+    transition: all 0.3s ease; /* Transición para el efecto "shrink" */
+}
+
+/* Estilos para el menú encogido (scroll) */
+.menu1.shrink {
+    height: 7vh;
+}
+
+.menu1.shrink .menu-logo img {
+    height: 45px;
+}
+
+.menu1.shrink .menu-centro,
+.menu1.shrink .menu-derecha {
+    font-size: 0.95em;
+}
+
+/* Sección izquierda (Logo) */
+.menu-logo img {
+    height: 50px; /* tamaño inicial */
+    transition: all 0.3s ease;
+}
+
+/* Sección central de navegación y búsqueda */
+.menu-centro {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    gap: 1%;
+    transition: all 0.3s ease;
+}
+
+/* Icono de Home/Inicio */
+.menu-home img {
+    height: 40px;
+    width: auto;
+    margin-top: 11%;
+    transition: transform 0.2s ease;
+}
+
+.menu-home img:hover {
+    transform: scale(1.1);
+}
+
+/* Contenedor del buscador */
+.menu-busqueda {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #e4ccff;
+    border-radius: 30px;
+    padding: 0.4em 1em;
+    width: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    overflow: visible;
+}
+
+.menu-busqueda input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0.5em;
+    font-size: 1em;
+    color: #333;
+}
+
+.menu-busqueda .icono-busqueda {
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.menu-busqueda .icono-busqueda:hover {
+    transform: scale(1.3);
+}
+
+/* Resultados desplegables del buscador */
+.resultados-busqueda {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.97);
+    border: 1px solid #d1b2ff;
+    border-radius: 15px;
+    max-height: 1500%;
+    overflow-y: auto;
+    display: none;
+    z-index: 9999;
+}
+
+#resultadosBusqueda {
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    border-radius: 15px;
+    margin-top: 5px;
+    z-index: 9999;
+    overflow: hidden;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.resultado-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.resultado-item:hover {
+    background-color: #f5e8ff;
+}
+
+.resultado-item img {
+    width: 10em;
+    height: 10em;
+    border-radius: 8px;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.resultado-item .info {
+    display: flex;
+    flex-direction: column;
+}
+
+.resultado-item .nombre {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9em;
+}
+
+.resultado-item .precio {
+    color: #d273d2;
+    font-size: 0.85em;
+}
+
+.no-resultados {
+    text-align: center;
+    color: #666;
+    font-family: "Parkinsans", sans-serif;
+    font-size: 0.95rem;
+    padding: 0.8rem;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+/* Sección derecha (Login/Usuario y Carrito) */
+.menu-derecha {
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+    justify-content: flex-end;
+    transition: all 0.3s ease;
+}
+
+/* Botón de inicio de sesión */
+.btn-sesion {
+    background-color: #00ffc7;
+    color: #000;
+    padding: 0.4em 1em;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-sesion:hover {
+    background-color: #fff;
+    color: #d273d2;
+}
+
+/* Contenedor de usuario logueado */
+.usuario-logueado{
+    display: flex;
+    gap: 1.5em;
+}
+
+.nombre-usuario {
+    color: #ffffff;
+    padding: 0.4em 1em;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Icono para abrir el panel del carrito */
+.icono-carrito {
+    width: 2em;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.icono-carrito:hover {
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   MENSAJES Y PÁGINAS ESPECIALES
+   ========================================================================== */
+
+/* Estilos de página de mensaje de advertencia (e.g., Aventura no disponible) */
+.mensaje-aventura {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    font-family: "Parkinsans", sans-serif;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.mensaje-aventura::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("../img/aventura.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.55);
+    z-index: -1;
+}
+
+.mensaje-aventura p {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    max-width: 80%;
+    line-height: 1.6;
+    font-size: clamp(1.3rem, 2.5vw, 2.2rem);
+    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+}
+
+/* Estilos para botones de navegación dentro de páginas especiales */
+.btn-volver,
+.admin-opc {
+    margin-top: 1.5rem;
+    background: #c971e0;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-family: "Parkinsans", sans-serif;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-volver:hover,
+.admin-opc:hover {
+    background: #a757c4;
+    transform: scale(1.05);
+}
+
+.btn-volver2 {
+    font-weight: 600;
+}
+
+.admin-opc{
+    display: flex;
+}
+
+.admin{
+    margin-top: 10em;
+}
+
+/* Botón de acceso a panel administrativo flotante */
+.boton-admin-flotante {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #00ffc7;
+    color: #000;
+    padding: 0.9em 1.8em;
+    border-radius: 30px;
+    font-weight: bold;
+    font-family: "Parkinsans", sans-serif;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    z-index: 2000;
+}
+
+.boton-admin-flotante:hover {
+    opacity: 1;
+    background-color: #fff;
+    color: #d273d2;
+    transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   CAROUSEL PRINCIPAL (HOME)
+   ========================================================================== */
+
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: auto;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-images img {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Botones de navegación del carrusel */
+button.prev,
+button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(128, 0, 128, 0.7);
+    color: white;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 100px;
+    transition: background-color 0.3s;
+    z-index: 10;
+}
+
+button.prev:hover,
+button.next:hover {
+    background-color: rgba(128, 0, 128, 0.9);
+}
+
+button.prev { left: 10px; }
+button.next { right: 10px; }
+
+/* ==========================================================================
+   SECCIONES PRINCIPALES Y TIPOS DE FIGURA
+   ========================================================================== */
+
+/* Contenedor para la selección de tipo de figura (Home) */
+#contenedorTipo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
+    margin: 4% auto 0% auto;
+    width: 80%;
+}
+
+.contenedor3 {
+    margin-bottom: 20px;
+}
+
+/* Tarjeta para mostrar un tipo de figura */
+.tipo-card {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tipo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.tipo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+    object-position: 50% 15%;
+}
+
+.tipo-card:hover img {
+    opacity: 0.7;
+}
+
+.tipo-texto {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    color: #fff;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-shadow: 0 0 8px #000;
+    font-family: "Parkinsans", sans-serif;
+}
+
+/* ==========================================================================
+   GRID Y TARJETAS DE FIGURAS
+   ========================================================================== */
+
+/* Contenedor principal para la cuadrícula de figuras */
+.figuras-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    row-gap: 40px;
+    margin: 3% 0;
+    justify-items: center;
+    align-items: start;
+}
+
+/* Estilos de la tarjeta individual de figura */
+.figura-card {
+    justify-content: center;
+    font-family: "Parkinsans", sans-serif;
+    font-weight: 400;
+    font-size: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2%;
+    padding: 2%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+    width: 75%;
+    height: 100%;
+}
+
+.figura-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.figura-card img {
+    width: 75%;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.figura-card h3 {
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+.figura-card .precio {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #d273d2;
+    margin: 5px 0;
+}
+
+.figura-card .disponibilidad {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #00fff9;
+    margin: 5px 0;
+}
+
+.figura-card .descripcion {
+    font-size: 0.75em;
+    color: #333;
+    margin: 5px 0;
+    line-height: 1.2em;
+}
+
+/* ==========================================================================
+   DETALLE DE FIGURA
+   ========================================================================== */
+
+/* Contenedor principal de la vista de detalle */
+.detalle-figura {
+    flex-direction: row;
+    width: 74em;
+    margin: 0 auto;
+    padding: 1%;
+}
+
+/* Estilos de la cuadrícula de detalle (imagen e info) */
+.detalle-grid {
+    display: flex;
+    gap: 40px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.detalle-imagenes {
+    display: flex;
+    justify-content: center;
+}
+
+.detalle-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 10px;
+}
+
+/* Carrusel de imágenes en la vista de detalle */
+.detalle-carousel-container {
+    position: relative;
+    width: 30em;
+    height: 45.5em;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    align-items: center;
+}
+
+.detalle-carousel-images {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+    width: 100%;
+    height: 100%;
+}
+
+.detalle-carousel-images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    flex-shrink: 0;
+}
+
+/* Botones de navegación del carrusel de detalle */
+.detalle-prev,
+.detalle-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+}
+
+.detalle-prev { left: 5px; }
+.detalle-next { right: 5px; }
+
+.flecha {
+    width: 3em;
+    display: block;
+}
+
+/* Estilos de texto específicos para la vista de detalle (más grandes que en la tarjeta) */
+.descripcion {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.precio {
+    font-size: 2em;
+    font-weight: bold;
+    color: #d273d2;
+    margin: 5px 0;
+}
+
+.disponibilidad {
+    font-size: 1em;
+    font-weight: bold;
+    color: #00fff9;
+    text-transform: uppercase;
+}
+
+/* Botón para añadir al carrito */
+.btn-add-carrito{
+    display: flex;
+    background: #f0ceff;
+    color: #000;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-add-carrito:hover{
+    transition: 0.2s;
+    background: #d6b0fc;
+}
+
+/* ==========================================================================
+   FORMULARIOS DE LOGIN / REGISTRO
+   ========================================================================== */
+
+/* Contenedor principal de los formularios (Login/Registro) */
+.contenedor01 {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin: 3.8% 0 0 0;
+}
+
+.contenedor0 {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    background-color: #f0f0f0;
+    border-radius: 50px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 700px;
+    max-width: 100%;
+    margin: 6.15% auto 3% auto;
+}
+
+.contenedor1 {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: #e4ccff;
+    padding: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.bloque1 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Estilos para campos de texto/input */
+.campo1 {
+    padding: 10px 15px;
+    border: 2px solid #c9a9ff;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: #fff;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.campo1:focus {
+    border-color: #b47bff;
+    box-shadow: 0 0 5px #b47bff80;
+}
+
+/* Estilos para el botón principal del formulario */
+.boton1 {
+    background-color: #b47bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.boton1:hover {
+    background-color: #9f63f8;
+    transform: translateY(-2px);
+}
+
+.boton1:active {
+    transform: translateY(1px);
+}
+
+/* ==========================================================================
+   FORMULARIO DE ADMINISTRACIÓN (CRUD)
+   ========================================================================== */
+
+/* Contenedor del formulario de administración */
+.contenedor4 {
+    margin-bottom: 20px;
+}
+
+/* Estilos para campos de formulario de administración */
+.contenedor4 input[type="text"],
+.contenedor4 input[type="number"],
+.contenedor4 select,
+.contenedor4 textarea,
+.contenedor4 input[type="file"],
+#buscarFigura {
+    display: block;
+    width: 100%;
+    margin: 6px 0;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+}
+
+/* Buscador dentro del panel de administración */
+#buscarFigura {
+    border: 1px solid #ccc;
+}
+
+/* Resultados de autocompletado */
+#autocomplete-results div {
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+#autocomplete-results div:hover {
+    background-color: #e0e0e0;
+}
+
+/* Botones de acción del formulario de administración */
+.contenedor4 button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+#insertarBtn { background-color: #4CAF50; color: white; }
+#guardarBtn { background-color: #2196F3; color: white; }
+#eliminarBtn { background-color: #f44336; color: white; }
+
+.contenedor4 button:hover {
+    opacity: 0.85;
+}
+
+.mensaje {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* ==========================================================================
+   PANEL DEL CARRITO DE COMPRAS
+   ========================================================================== */
+
+/* Panel lateral del carrito */
+.carrito-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.4s ease;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.carrito-panel.abierto {
+    right: 0;
+}
+
+/* Encabezado del carrito */
+.carrito-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #d273d2;
+    color: #fff;
+}
+
+.cerrar-carrito {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Contenido de los artículos en el carrito */
+.carrito-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.carrito-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.carrito-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.carrito-info {
+    flex: 1;
+}
+
+/* Controles de cantidad */
+.carrito-controles {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-cantidad {
+    background-color: #ddd;
+    border: none;
+    border-radius: 6px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+}
+
+.btn-cantidad:hover {
+    background-color: #bbb;
+}
+
+/* Pie del carrito y botón de finalizar compra */
+.carrito-footer {
+    padding: 15px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.btn-finalizar {
+    background: #00ffc7;
+    color: #000;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-finalizar:hover {
+    background: #00d6a7;
+}
+
+/* ==========================================================================
+   PIE DE PÁGINA (FOOTER)
+   ========================================================================== */
+
+.pie1 {
+    font-family: "Parkinsans", sans-serif;
+    font-weight: 400;
+    font-size: 130%;
+    font-style: normal;
+    bottom: 0;
+    right: 0;
+    height: 5vh;
+    width: 100%;
+    padding: 1% 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 10px 0px #b8b8b8;
+    background-color: #d273d2;
+    position: relative;
+    margin-top: auto;
+}
+
+.pie1 a {
+    position: relative;
+    color: #fff;
+    margin: 0 10px;
+    padding-bottom: 4px;
+    transition: color 0.3s ease;
+}
+
+.pie1 a:hover {
+    color: #00ffc7;
+}
+
+.pie1 a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 3px;
+    background-color: #00ffc7;
+    box-shadow: 0 0 10px #00ffc7, 0 0 20px #00ffc7;
+    transition: width 0.3s ease;
+}
+
+.pie1 a:hover::after {
+    width: 100%;
+}
